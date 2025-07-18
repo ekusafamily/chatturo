@@ -150,4 +150,4 @@ setInterval(() => {
     text: '__ping__',
     time: new Date().toISOString()
   });
-}, 60000);
+}, 6000);
