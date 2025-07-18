@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mark 2 Chat</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Socket.io Client -->
+  <script src="/socket.io/socket.io.js" defer></script>
+  <script src="/client.js" defer></script>
+</head>
+<body class="bg-gray-100 h-screen flex items-center justify-center">
+
+  <!-- Login Screen -->
+  <div id="login-screen" class="w-full max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
+    <div class="mb-6">
+      <label class="block text-gray-700 text-sm font-semibold mb-2" for="username">
+        Your Name
+      </label>
+      <input id="username" type="text"
+        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        placeholder="Enter your name">
+    </div>
+    <button id="login-btn"
+      class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg focus:outline-none focus:shadow-outline transition duration-300">
+      Join Chat
+    </button>
+    <p class="text-center text-gray-500 text-xs mt-4">Powered by Socket.io</p>
+  </div>
+
+  <!-- Chat Interface -->
+  <div id="chat-interface" class="hidden h-screen w-full">
+    <div class="flex h-full">
+
+      <!-- Sidebar -->
+      <div class="w-64 bg-white border-r border-gray-200 flex flex-col">
+        <div class="p-4 border-b border-gray-200">
+          <h2 class="font-bold text-lg text-gray-800">Online Users</h2>
+        </div>
+        <div id="user-list" class="p-4 flex-1 overflow-y-auto"></div>
+        <div class="p-4 border-t border-gray-200">
+          <button id="logout-btn"
+            class="w-full bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg">
+            Logout
+          </button>
+        </div>
+      </div>
+
+      <!-- Main Chat Area -->
+      <div class="flex-1 flex flex-col">
+        <!-- Header -->
+        <header class="bg-white shadow-sm py-4 px-6 flex items-center justify-between">
+          <div class="flex items-center">
+            <div class="h-10 w-10 rounded-full bg-indigo-500 flex items-center justify-center text-white font-semibold text-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-1.414-.586L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2h4" />
+              </svg>
+            </div>
+            <div class="ml-3">
+              <h2 class="font-semibold text-gray-800">Chat Room</h2>
+              <p id="user-count" class="text-xs text-gray-500">0 participants</p>
+            </div>
+          </div>
+        </header>
+
+        <!-- Chat Messages -->
+        <div id="chat-messages" class="flex-1 overflow-y-auto p-6 space-y-4 bg-gray-50"></div>
+
+        <!-- Typing Indicator -->
+        <div id="typing-indicator" class="px-6 py-1 hidden">
+          <div class="flex items-center text-sm text-gray-500">
+            <span id="typing-username"></span> is typing
+            <div class="typing-indicator flex space-x-1 ml-2">
+              <span class="w-2 h-2 rounded-full bg-gray-400"></span>
+              <span class="w-2 h-2 rounded-full bg-gray-400"></span>
+              <span class="w-2 h-2 rounded-full bg-gray-400"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Message Input -->
+        <div class="bg-white border-t border-gray-200 px-4 py-3 sm:px-6">
+          <div class="flex space-x-3">
+            <input id="message-input" type="text" placeholder="Type your message..."
+              class="flex-1 border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            <button id="send-btn"
+              class="bg-indigo-600 text-white rounded-full p-2 hover:bg-indigo-700 transition duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path
+                  d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5-1.429a1 1 0 00.169-1.84l-7-14z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
