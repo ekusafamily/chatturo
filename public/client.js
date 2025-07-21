@@ -31,6 +31,12 @@ function createAvatar(name) {
   return `<div class="w-8 h-8 rounded-full ${color} flex items-center justify-center text-sm font-medium text-white">${initial}</div>`;
 }
 
+// Restore username if server knows it
+socket.on('restore username', (name) => {
+  if (name && !username) {
+    usernameInput.value = name;
+  }
+});
 loginBtn.addEventListener('click', () => {
   username = usernameInput.value.trim();
   if (username === '') {
